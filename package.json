@@ -1,0 +1,9 @@
+{
+  "name": "async-link",
+  "version": "0.0.1",
+  "dependencies": {},
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "react-router-dom": "^4.2.2"
+  }
+}
