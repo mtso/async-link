@@ -9,20 +9,17 @@ import { withRouter, Link } from 'react-router-dom'
 // />
 @withRouter
 class AsyncLink extends Component {
-  handler = (e) => {
+  handler = (event) => {
     const { onClick, to, history } = this.props
     
+    // Return to use default Link behavior if onClick isn't found.
     if (!onClick) {
       return
-    } else {
-      e.preventDefault()
     }
     
-    const attributes = {
-      ...this.props,
-    }
+    event.preventDefault()
 
-    return onClick(attributes)
+    return onClick(event, this.props)
       .then(() => history.push(to))
       .catch(console.error)
   }
