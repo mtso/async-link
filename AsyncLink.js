@@ -1,40 +1,36 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 
+// Assumes that loadData() returns a Promise.
 // Usage:
 // <AsyncLink
 //   to='/route'
 //   onClick={() => dispatch(loadData())}
 // />
-
 @withRouter
 class AsyncLink extends Component {
   handler = (e) => {
-    e.preventDefault()
-
     const { onClick, to, history } = this.props
-
-    if (onClick) {
-      const attributes = {
-        {...this.props}
-      }
-
-      return onClick(attributes)
-        .then(() => {
-          // push history after successful dispatch
-          history.push(to)
-        })
-
+    
+    if (!onClick) {
+      return
     } else {
-      return new Promise((resolve, reject) => {
-        history.push(to)
-        resolve()
-      })
+      e.preventDefault()
     }
+    
+    const attributes = {
+      ...this.props,
+    }
+
+    return onClick(attributes)
+      .then(() => history.push(to))
+      .catch(console.error)
   }
 
   render() {
-    const { onClick, ...rest } = this.props
+    // Strip staticContext and onClick from props.
+    const { onClick, staticContext, ...rest } = this.props
+
     return (
       <Link
         onClick={this.handler}
