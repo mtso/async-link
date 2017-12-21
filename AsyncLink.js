@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
 import { withRouter, Link } from 'react-router-dom'
 
-// Assumes that loadData() returns a Promise.
+// Assumes that `loadData()` returns a Promise, and `dispatch`
+// is injected from 'react-redux'.
+//
 // Usage:
+// import { AsyncLink } from 'react-router-components/dom'
+//
 // <AsyncLink
 //   to='/route'
 //   onClick={() => dispatch(loadData())}
