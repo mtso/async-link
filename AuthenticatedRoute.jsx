@@ -1,27 +1,21 @@
+import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 
 class AuthenticatedRoute extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {
-      isRedirect: false,
-    }
-  }
-  
   render() {
-    const { user, sentinelKey, loginPath } = this.props
+    const { sentinelKey, loginPath, component as Component, ...rest } = this.props
     
     const checkName = sentinelKey || 'user'
+    const checkValue = this.props[checkName] || null
     
-    const userValue = this.props[checkName] || null
-    
-    if (!userValue) {
+    if (!checkValue) {
       return (
-        <Redirect
-          to={loginPath}
-        />
+        <Redirect to={loginPath} />
       )
     } else {
-      
+      return (
+        <Component {...rest} />
+      )
     }
   }
 }
