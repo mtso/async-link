@@ -1,19 +1,26 @@
-import React, { Component } from 'react'
-import { Route, Redirect } from 'react-router-dom'
+import React from 'react';
+import { Route, Redirect } from 'react-router';
 
-class AuthenticatedRoute extends Component {
-  render() {
-    const { sentinelKey, loginPath, ...rest } = this.props
+/**
+ * Example usage:
+ * const privateRoutes = ({ session }) => (
+ *   <AuthenticatedRoute
+ *     isLoggedIn={session.isLoggedIn}
+ *     loginPath='/'
+ *     path='/private'
+ *     component={PrivateComponent}
+ *   />
+ * );
+ */
+const AuthenticatedRoute = ({ sentinelKey, loginPath, ...rest }) => {
+  const checkName = sentinelKey || 'isLoggedIn';
+  const checkValue = this.props[checkName];
 
-    const checkName = sentinelKey || 'user'
-    const checkValue = this.props[checkName] || null
+  return !!checkValue ? (
+    <Route {...rest} />
+  ) : (
+    <Redirect to={loginPath} />
+  );
+};
 
-    return !!checkValue ? (
-      <Redirect to={loginPath} />
-    ) : (
-      <Route {...rest} />
-    )
-  }
-}
-
-export default AuthenticatedRoute
+export default AuthenticatedRoute;
